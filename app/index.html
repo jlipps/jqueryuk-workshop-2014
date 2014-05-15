@@ -4,9 +4,9 @@
         <title>Movie List</title>
         <meta http-equiv='Content-Type' content='text/html; charset=utf-8'/>
         <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"/>
-        <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.0-beta.1/jquery.mobile-1.4.0-beta.1.min.css"/>
-        <link rel="stylesheet" href="http://example.gajotres.net/iscrollview/jquery.mobile.iscrollview.css"/>
-        <link rel="stylesheet" href="http://example.gajotres.net/iscrollview/jquery.mobile.iscrollview-pull.css"/>
+        <link rel="stylesheet" href="css/jquery.mobile-1.4.2.min.css"/>
+        <link rel="stylesheet" href="css/jquery.mobile.iscrollview.css"/>
+        <link rel="stylesheet" href="css/jquery.mobile.iscrollview-pull.css"/>
         <style>
             .ui-content {
                 padding: 0 !important;
@@ -19,21 +19,25 @@
             .example-wrapper, .example-wrapper div.iscroll-scroller {
                 width: 100% !important;
             }
+
+            #search {
+              width: 90%;
+            }
         </style>
-        <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
-        <script src="http://code.jquery.com/mobile/1.4.0-beta.1/jquery.mobile-1.4.0-beta.1.min.js"></script>
-        <script src="http://example.gajotres.net/iscrollview/iscroll.js"></script>
-        <script src="http://example.gajotres.net/iscrollview/jquery.mobile.iscrollview.js"></script>
-        <script src="app.js"></script>
+        <script src="js/lib/jquery-2.1.1.min.js"></script>
+        <script src="js/lib/jquery.mobile-1.4.2.min.js"></script>
+        <script src="js/lib/iscroll.js"></script>
+        <script src="js/lib/jquery.mobile.iscrollview.js"></script>
+        <script src="js/app.js"></script>
     </head>
     <body>
         <div data-role="page" id="home">
             <div data-theme="a" data-role="header">
                 <h3>
-                    Movie List
+                    Movie Search
                 </h3>
             </div>
-            <input type="search" name="search-1" id="search-1" value="">
+            <input class="ui-grid-solo" type="search" name="search" id="search" value="">
             <div data-role="content">
                 <div class="example-wrapper" data-iscroll>
                     <ul data-role="listview"  id="movie-list" data-theme="a">

@@ -3,6 +3,7 @@
 
 var doMovieQuery = function (q) {
   if (q.length >= 3) {
+    $.mobile.loading('show');
     var url = 'http://api.themoviedb.org/3/',
       mode = 'search/movie?query=',
       movieName = '&query=' + encodeURI(q),
@@ -34,10 +35,10 @@ $(document).on('pageinit', '#home', function () {
 });
 
 $(function () {
-  $('#search-1').keyup(function () {
+  $('#search').keyup(function () {
     doMovieQuery($(this).val());
   });
-  $('#search-1').change(function () {
+  $('#search').change(function () {
     if ($(this).val() === "") {
       emptyMovieList();
     }
@@ -82,4 +83,5 @@ var showSearchResult = function (result) {
     });
     $('#movie-list').listview('refresh');
   }
+  $.mobile.loading('hide');
 };
