@@ -1,20 +1,14 @@
-/* global $:true, alert:true, document:true */
+/* global $:true, document:true, ms:true, alert:true */
 "use strict";
 
-var doMovieQuery = function (q) {
-  if (q.length >= 3) {
+var doMovieQuery = function (q, cb) {
+  if (ms.shouldDoSearch(q)) {
     $.mobile.loading('show');
-    var url = 'http://api.themoviedb.org/3/',
-      mode = 'search/movie?query=',
-      movieName = '&query=' + encodeURI(q),
-      key = '&api_key=470fd2ec8853e25d2f8d86f685d2270e',
-      type = '&search_type=ngram';
-
     $.ajax({
-      url: url + mode + key + movieName + type,
+      url: ms.buildApiUrl(q),
       dataType: "jsonp",
       async: true,
-      success: showSearchResult,
+      success: cb,
       error: function () {
         alert('Network error has occurred please try again!');
       }
@@ -36,7 +30,7 @@ $(document).on('pageinit', '#home', function () {
 
 $(function () {
   $('#search').keyup(function () {
-    doMovieQuery($(this).val());
+    doMovieQuery($(this).val(), showSearchResult);
   });
   $('#search').change(function () {
     if ($(this).val() === "") {
@@ -48,14 +42,8 @@ $(function () {
 $(document).on('pagebeforeshow', '#headline', function () {
   $('#movie-data').empty();
   $.each(movieInfo.result, function (i, row) {
-    console.log(row);
     if (row.id.toString() === movieInfo.id.toString()) {
-      console.log(row.id);
-      $('#movie-data').append('<li><img src="http://d3gtl9l2a4fn1j.cloudfront.net/t/p/w185' + row.poster_path + '"></li>');
-      $('#movie-data').append('<li>Title: ' + row.original_title + '</li>');
-      $('#movie-data').append('<li>Release date: ' + row.release_date + '</li>');
-      $('#movie-data').append('<li>Popularity: ' + row.popularity + '</li>');
-      $('#movie-data').append('<li>Average rating: ' + row.vote_average + '</li>');
+      $('#movie-data').append(ms.getMovieDetailHtml(row));
       $('#movie-data').listview('refresh');
     }
   });
@@ -78,8 +66,7 @@ var showSearchResult = function (result) {
   } else {
     $('#movie-list').empty();
     $.each(result.results, function (i, row) {
-      var img = row.poster_path ? '<img src="http://d3gtl9l2a4fn1j.cloudfront.net/t/p/w185' + row.poster_path + '"/>' : '<div style="float:left; width: 100px;">&nbsp;</div>';
-      $('#movie-list').append('<li><a href="" data-id="' + row.id + '">' + img + '<h3>' + row.title + '</h3><p>' + row.vote_average + '/10</p></a></li>');
+      $('#movie-list').append(ms.getMovieListItemHtml(row));
     });
     $('#movie-list').listview('refresh');
   }
