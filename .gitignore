@@ -6,3 +6,5 @@ moviesearch/platforms/android/CordovaLib/ant-gen/
 moviesearch/platforms/android/ant-build/
 moviesearch/platforms/android/ant-gen/
 moviesearch/platforms/ios/cordova/console.log
+moviesearch/platforms/android/.staging/
+moviesearch/platforms/ios/.staging/
