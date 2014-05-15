@@ -35,6 +35,9 @@
   "scripts": {},
   "devDependencies": {
     "qunitjs": "^1.14.0",
-    "mocha": "^1.18.2"
+    "mocha": "^1.18.2",
+    "wd": "^0.2.21",
+    "chai": "^1.9.1",
+    "chai-as-promised": "^4.1.1"
   }
 }
