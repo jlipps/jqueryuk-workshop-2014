@@ -29,11 +29,10 @@
   "directories": {
     "lib": "./lib"
   },
-  "dependencies": {
-  },
-  "scripts": {
-  },
+  "dependencies": {},
+  "scripts": {},
   "devDependencies": {
+    "qunitjs": "^1.14.0",
+    "mocha": "^1.18.2"
   }
 }
-
