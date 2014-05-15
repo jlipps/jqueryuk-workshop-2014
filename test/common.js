@@ -1,11 +1,18 @@
 /* global before:true, after:true, it:true, describe:true */
 "use strict";
 var wd = require('wd')
+  , Asserter = wd.Asserter
   , chai = require('chai')
   , chaiAsPromised = require("chai-as-promised");
 
 chai.use(chaiAsPromised);
 chai.should();
+
+var tagChaiAssertionError = function(err) {
+  // throw error and tag as retriable to poll again
+  err.retriable = err instanceof chai.AssertionError;
+  throw err;
+};
 
 module.exports = function (caps) {
   describe('MovieSearch app (' + caps.platformName + ')', function () {
@@ -35,9 +42,10 @@ module.exports = function (caps) {
       driver
         .contexts()
         .then(function (ctxs) {
-          ctxs.length.should.eql(2);
+          ctxs.length.should.be.above(1);
           return driver.context(ctxs[1]);
         })
+        .sleep(3000)
         .nodeify(done);
     });
 
@@ -60,14 +68,21 @@ module.exports = function (caps) {
     });
 
     it('should start finding movies with three chars', function (done) {
+      var moviesLoaded = new Asserter(function (driver) {
+        return driver.elementById('movie-list').text()
+                .then(function (text) {
+                  try {
+                    text.should.contain('Bat');
+                  } catch (e) {
+                    tagChaiAssertionError(e);
+                  }
+                });
+      });
       driver
         .elementById('search')
         .sendKeys('t')
-        .sleep(3000)
-        .elementById('movie-list')
-          .text()
-            .should.eventually.contain('Bat')
-        .notify(done);
+        .waitFor(moviesLoaded, 12000, 500)
+        .nodeify(done);
     });
 
     it('should show a detail page', function (done) {
