@@ -1,3 +1,8 @@
 node_modules
 moviesearch/platforms/ios/www
 moviesearch/platforms/android/assets/www
+moviesearch/platforms/android/CordovaLib/ant-build/
+moviesearch/platforms/android/CordovaLib/ant-gen/
+moviesearch/platforms/android/ant-build/
+moviesearch/platforms/android/ant-gen/
+moviesearch/platforms/ios/cordova/console.log
