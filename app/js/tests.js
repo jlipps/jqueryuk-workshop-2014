@@ -1,5 +1,34 @@
-/* global test:true, equal:true, throws:true, ms:true */
+/* global test:true, equal:true, throws:true, ms:true, QUnit:true,
+   window:true */
 "use strict";
+console.log('hi');
+
+// sauce boilerplate
+var log = [];
+QUnit.done = function (test_results) {
+  console.log('done');
+  var tests = log.map(function (details) {
+    return {
+      name: details.name,
+      result: details.result,
+      expected: details.expected,
+      actual: details.actual,
+      source: details.source
+    };
+  });
+  test_results.tests = tests;
+  window.global_test_results = test_results;
+};
+
+QUnit.testStart(function (testDetails) {
+  QUnit.log = function (details) {
+    if (!details.result) {
+      details.name = testDetails.name;
+      log.push(details);
+    }
+  };
+});
+// end boilerplate
 
 test("shouldDoSearch", function () {
   equal(ms.shouldDoSearch(''), false);

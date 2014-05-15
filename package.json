@@ -29,7 +29,9 @@
   "directories": {
     "lib": "./lib"
   },
-  "dependencies": {},
+  "dependencies": {
+    "http-server": "^0.6.1"
+  },
   "scripts": {},
   "devDependencies": {
     "qunitjs": "^1.14.0",
