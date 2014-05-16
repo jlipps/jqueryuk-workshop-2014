@@ -8,12 +8,6 @@ var wd = require('wd')
 chai.use(chaiAsPromised);
 chai.should();
 
-var tagChaiAssertionError = function(err) {
-  // throw error and tag as retriable to poll again
-  err.retriable = err instanceof chai.AssertionError;
-  throw err;
-};
-
 module.exports = function (caps) {
   describe('MovieSearch app (' + caps.platformName + ')', function () {
     var driver;
@@ -23,7 +17,8 @@ module.exports = function (caps) {
 
     before(function (done) {
       if (onSauce) {
-        //driver = wd.promiseChainRemote(
+        driver = wd.promiseChainRemote('ondemand.saucelabs.com', 80,
+                                       username, key);
       } else {
         driver = wd.promiseChainRemote('localhost', 4723);
       }
@@ -119,4 +114,10 @@ module.exports = function (caps) {
     });
 
   });
+};
+
+var tagChaiAssertionError = function (err) {
+  // throw error and tag as retriable to poll again
+  err.retriable = err instanceof chai.AssertionError;
+  throw err;
 };
